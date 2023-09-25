@@ -7,7 +7,7 @@ public class AsteroidSpawner : MonoBehaviour
     public GameObject asteroidPreFab;
     public float spawnRatePerMinute = 10f;
     public float spawnRateIncrement = 1f;
-    public float maxLife = 4f;
+    public float maxLife = 3f;
 
     private float xLimit = 8f;
 

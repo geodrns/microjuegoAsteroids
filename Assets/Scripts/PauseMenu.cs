@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -44,7 +45,9 @@ public class PauseMenu : MonoBehaviour
 
     public void RestartGame()
     {
+        Player.SCORE = 0;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Time.timeScale = 1f;
     }
 
     public void QuitGame()

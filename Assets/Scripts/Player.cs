@@ -55,11 +55,10 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Meteor") || collision.gameObject.CompareTag("Fragment"))
         {
             SCORE = 0;
             RestartGame();
-            
         }
     }
 

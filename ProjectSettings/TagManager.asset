@@ -4,8 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Enemy
   - UI
+  - Fragment
+  - Meteor
   layers:
   - Default
   - TransparentFX
