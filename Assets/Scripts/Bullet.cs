@@ -14,20 +14,26 @@ public class Bullet : MonoBehaviour
     public Vector3 targetVector;
     void Start()
     {
-        Destroy(gameObject, maxLifeTime);
+        //Destroy(gameObject, maxLifeTime);
     }
 
     void Update()
     {
         transform.Translate(targetVector * speed * Time.deltaTime);
 
+        var newPos = transform.position;
+        if (newPos.x > Player.xBorderLimit) gameObject.SetActive(false); 
+        else if (newPos.x < -Player.xBorderLimit) gameObject.SetActive(false);
+        else if (newPos.y > Player.yBorderLimit) gameObject.SetActive(false);
+        else if (newPos.y < -Player.yBorderLimit) gameObject.SetActive(false);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Meteor"))
         {
-            Destroy(gameObject);//destruye bala
+            //Destroy(gameObject);//destruye bala
+            gameObject.SetActive(false);
             Destroy(collision.gameObject);//destruye asteroide
             IncreaseScore();
 
@@ -36,8 +42,9 @@ public class Bullet : MonoBehaviour
 
         else if (collision.gameObject.CompareTag("Fragment"))
         {
+            gameObject.SetActive(false);
             Destroy(collision.gameObject);//destruye fragmento
-            Destroy(gameObject);//destruye bala
+            //Destroy(gameObject);//destruye bala
             IncreaseScore();
         }
     }

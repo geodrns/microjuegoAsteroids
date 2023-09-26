@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class BulletPool : MonoBehaviour
 {
-    [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private int poolSize = 10;
-    [SerializeField] private List<GameObject> bulletList;
+    public static BulletPool instance;
 
-    private static BulletPool instance;
-    public static BulletPool Instance {  get { return instance; } }
+    private List<GameObject> pooledBullets = new List<GameObject>();
+    private int amountToPool = 20;
+
+    [SerializeField] private GameObject bulletPrefab;
 
     private void Awake()
     {
@@ -16,37 +16,27 @@ public class BulletPool : MonoBehaviour
         {
             instance = this;
         }
-        else
-        {
-            Destroy(gameObject);
-        }
     }
 
 
     void Start()
     {
-        AddBulletsToPool(poolSize);
-    }
-
-    private void AddBulletsToPool(int amount)
-    {
-        for (int i = 0; i < amount; i++)
+        for (int i = 0; i < amountToPool; i++)
         {
             GameObject bullet = Instantiate(bulletPrefab);
             bullet.SetActive(false);
-            bulletList.Add(bullet);
-            bullet.transform.parent = transform;
+            pooledBullets.Add(bullet);
         }
     }
 
-    public GameObject RequestBullet()
+
+    public GameObject GetPooledBullet()
     {
-        for (int i = 0;i < bulletList.Count; i++)
+        for (int i = 0;i < pooledBullets.Count; i++)
         {
-            if (!bulletList[i].activeSelf)//si elemento esta inactivo
+            if (!pooledBullets[i].activeInHierarchy)//si elemento esta inactivo
             {
-                bulletList[i].SetActive(true);//lo activo
-                return bulletList[i];//lo devuelvo a quien lo haya solicitado
+                return pooledBullets[i];//lo devuelvo a quien lo haya solicitado
             }
         }
         return null;//si no encuentro ninguna inactiva

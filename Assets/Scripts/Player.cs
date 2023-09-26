@@ -47,9 +47,14 @@ public class Player : MonoBehaviour
         transform.position = newPos;
 
         if (Input.GetKeyDown(KeyCode.Space)){
-            GameObject bullet = Instantiate(bulletPrefab, bulletSpawner.transform.position, Quaternion.identity);//giro ninguno
-            Bullet balaScript = bullet.GetComponent<Bullet>();
-            balaScript.targetVector = transform.right;
+            //GameObject bullet = Instantiate(bulletPrefab, bulletSpawner.transform.position, Quaternion.identity);//giro ninguno
+            GameObject bullet = BulletPool.instance.GetPooledBullet();
+            if (bullet != null)
+            {
+                bullet.transform.position = bulletSpawner.transform.position;//sale desde la posicion del bulletSpawner
+                bullet.SetActive(true);//activo una bala
+                bullet.GetComponent<Bullet>().targetVector = transform.right;//sale con movimiento
+            }
         }
     }
 
